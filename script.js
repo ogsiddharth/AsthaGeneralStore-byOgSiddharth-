@@ -92,28 +92,30 @@ function updateCartCount() {
 
 /* ---------------- PAGE SWITCH ---------------- */
 
-function showPage(pageId) {
+function showPage(pageId){
 
-    // Hide all pages
-    document.querySelectorAll('.page').forEach(p => {
-        p.style.display = "none";
+    document.querySelectorAll(".page").forEach(p=>{
+        p.classList.remove("active");
     });
 
-    // Show selected page
-    const targetPage = document.getElementById(pageId);
-    if (targetPage) {
-        targetPage.style.display = "block";
-    }
+    document.getElementById(pageId)?.classList.add("active");
 
-    // Force scroll to top instantly
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    // nav highlight
+    document.querySelectorAll(".nav-item").forEach(n=>{
+        n.classList.remove("active");
+        if(n.innerText.toLowerCase().includes(pageId)){
+            n.classList.add("active");
+        }
+    });
 
-    // Agar cart page hai to render karo
-    if (pageId === "cart") {
-        renderCart();
-    }
+    window.scrollTo({
+        top:0,
+        behavior:"instant"
+    });
+
+    if(pageId==="cart") renderCart();
 }
+
 
 
 /* ---------------- MODERN TOAST ---------------- */
@@ -140,3 +142,9 @@ window.addEventListener("DOMContentLoaded", () => {
     renderCart();
     updateCartCount();
 });
+
+/* ---------------- FAQ TOGGLE ---------------- */
+
+function toggleFAQ(element) {
+    element.classList.toggle("active");
+}
